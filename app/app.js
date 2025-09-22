@@ -5,17 +5,23 @@ function initListeners() {
         let n = $("#name").val();
         let ag = $("#age").val();
         let cs = $("#classes").val();
+        let pnNmb = $("#number").val();
+        let em = $("#email").val();
         
         let newArrClasses = cs.split(",").map((item) => item.trim());
         
         let studentObj = {
             name: n,
             age: ag,
-            classes: newArrClasses
+            classes: newArrClasses,
+            number: pnNmb,
+            email: em
         };
         $("#name").val("");
         $("#age").val("");
         $("#classes").val("");
+        $("#number").val("");
+        $("#email").val("");
         addStudent(studentObj);
     });
     $("#showLocal").on("click",  (e) => {
@@ -25,8 +31,8 @@ function initListeners() {
 
 function addStudent(student) {
     let allStudents = JSON.parse(localStorage.getItem("students"));
+    if (!allStudents) allStudents = [];
     allStudents.push(student);
-
     localStorage.setItem("students", JSON.stringify(allStudents));
 }
 
@@ -35,7 +41,7 @@ function getStudents() {
     let allStudents = JSON.parse(localStorage.getItem("students"));
     let studentString="<div>"
     $.each(allStudents, (index, student) => {
-        studentString += `<p>name: ${student.name} Age: ${student.age}`;
+        studentString += `<p>Name: ${student.name} Age: ${student.age} Phone Number: ${student.number} Email: ${student.email} Classes: `;
 
         $.each(student.classes, (i, cls) => {
             studentString += `<span> ${cls}</span>, `;
